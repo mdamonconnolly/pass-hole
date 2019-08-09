@@ -8,29 +8,23 @@ class Window(Frame):
 
         self.master = master #master widget
         self.grid()
+        
 
 
+    self.master = master #master widget
+    self.grid()
+
+    
+add_btn = Button(master, text="Add login", command=callback)
 
 root = Tk() #root window
 root.title("Passhole ui v.01")
 root.minsize(800,600) #set min size
 
-tree = ttk.Treeview(root)
+tree = ttk.Treeview(root, columns=("site","email","username","pasword"))
+tree['show'] = 'headings'
 tree.grid(padx=(20,20))
 tree.grid(pady=(50,20))
-
-
-tree["columns"]=("one","two", "three", "four")
-tree.column("one", width=150)
-tree.column("two", width=150)
-tree.column("three", width=150)
-tree.column("four", width=150)
-
-tree.insert("", 0, text="Site", values=("1A","1B"))
-tree.insert("", 1, text="Email", values=("2A","2B"))
-
-
-
 
 
 app = Window(root) #instance class
