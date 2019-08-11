@@ -6,7 +6,7 @@ from tkinter import ttk
 
 
 root = Tk() #root window
-root.title("Passhole ui v.02")
+root.title("Passhole ui v.03")
 root.minsize(800,350)
 
 #Grid.rowconfigure(Grid, row=0, weight=1)
