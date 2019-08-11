@@ -1,6 +1,9 @@
 import manager
+import add_entry_dialog
+
 from tkinter import *
 from tkinter import ttk
+
 
 root = Tk() #root window
 root.title("Passhole ui v.02")
@@ -23,6 +26,7 @@ class Window(Frame):
         self.initUI()
     
     def add_func(self):
+        add_dialog_popup = add_entry_dialog.addDialog(self.master)
         print("added login\n")
 
     def edit_func(self):
