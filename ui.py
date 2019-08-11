@@ -1,7 +1,13 @@
 import manager
+import add_entry_dialog
+
 from tkinter import *
 from tkinter import ttk
 
+
+root = Tk() #root window
+root.title("Passhole ui v.03")
+root.minsize(800,350)
 
 #Grid.rowconfigure(Grid, row=0, weight=1)
 #Grid.columnconfigure(Grid, row=0, weight=1)
@@ -20,6 +26,7 @@ class Window(Frame):
         self.initUI()
     
     def add_func(self):
+        add_dialog_popup = add_entry_dialog.addDialog(self.master)
         print("added login\n")
 
     def edit_func(self):
@@ -50,16 +57,23 @@ class Window(Frame):
 
         # tree table [ middle ]
         table = ttk.Treeview(midFrame, columns=("site","email","username","password"))
+
+        table.column("0", width=200, minwidth=100)
+        table.column("1", width=200, minwidth=100)
+        table.column("2", width=200, minwidth=100)
+        table.column("3", width=200, minwidth=100)
+
         table['show'] = 'headings'
         table.heading('0',text='Site')
         table.heading('1',text='Email')
         table.heading('2',text='Username')
         table.heading('3',text='Password')
 
-        firstEmail = table.insert("", 0, text="your_email_here1960@gmail.com")
+        firstEmail = table.insert("", 0, text='your_email_here1960@gmail.com')
+        firstEmail = table.insert("", 1, text="your_email_here1960@gmail.com")
+        firstEmail = table.insert("", 2, text="your_email_here1960@gmail.com")
 
         table.grid(columnspan=3, pady=20, padx=20)
-
         
         # bottom row buttons
         copy_email_btn = Button(bottomFrame, text="Copy Email", command=self.copy_email)
