@@ -7,13 +7,13 @@ class addDialog:
         top = self.top = Toplevel(parent)
         top.resizable(False, False)
 
-        label_frame = LabelFrame(top, borderwidth=1)
-        label_frame.pack(side=TOP, fill=BOTH, pady=10, expand=FALSE)
+        label_frame = Frame(top)
+        label_frame.pack(side=TOP, fill=BOTH, expand=FALSE)
 
-        field_frame = Frame(top, borderwidth=1)
+        field_frame = Frame(top)
         field_frame.pack(fill=BOTH)
 
-        button_frame=Frame(top, borderwidth=1)
+        button_frame=Frame(top)
         button_frame.pack(side=BOTTOM)
 
         site_label = Label(label_frame, text="Enter website").pack(side=LEFT, pady=10, padx=60)
@@ -28,12 +28,20 @@ class addDialog:
         self.password = Entry(field_frame, width=30).pack(side=RIGHT, pady=10, padx=5)
     
 
-        self.enterDetails_btn = Button(button_frame, text="Add new entry").pack(side=BOTTOM, pady=10, padx=5)
+        self.enterDetails_btn = Button(button_frame, text="Add new entry", width=15, command=self.addEntry).pack(side=LEFT, pady=10, padx=40)    
+        self.cancel_btn = Button(button_frame, text="Cancel", width=15).pack(side=RIGHT, pady=10, padx=40)
+
+    def addEntry(self):
+        #entered_site = self.site.get()
+        #print(entered_site)
+        pass
+    
 
 
-
-        print ('imported to main ui successfully')
-
+#TODO 
+# close popup dialog on button click
+# store fields 1-4 as strings
+# on popup closure, display added variables as a new row in the table
 
 
 
