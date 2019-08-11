@@ -21,8 +21,13 @@ class Manager():
                 json.dump(self.entries, file)
         except Exception as e:
             print('Error adding entry {0} with Exception: {1}'.format(title, e))
+            return 0
+        return 1
             
     def edit_entry(self, title, email, username, password):
+
+        if title not in self.entries:
+            return 0
 
         try:
             self.entries[title] = {title: [email, username, password]}
