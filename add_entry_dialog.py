@@ -45,12 +45,13 @@ class addDialog:
         entered_email = str(self.email.get())
         entered_user = str(self.user.get())
         entered_password = str(self.password.get())
-
+        self.top.destroy()
+        
         print(entered_site, entered_email, entered_user, entered_password)
 
         
     def exit(self):
-        add_dialog_popup.destroy()
+        self.top.destroy()
 
 #TODO 
 # close popup dialog on button click
