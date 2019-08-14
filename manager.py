@@ -13,41 +13,50 @@ class Manager():
             with open('.\\values', 'r') as file:
                 self.entries = json.load(file)
 
-        
-
-
-
     def add_entry(self, title, email, username, password):
             
-        self.entries.update({title:[email, username, password]})
+        try:
+            self.entries.update({title:[email, username, password]})    
+            with open(self.file, 'w') as file:
+                json.dump(self.entries, file)
+        except Exception as e:
+            print('Error adding entry {0} with Exception: {1}'.format(title, e))
+            return 0
+        return 1
             
-        with open(self.file, 'w') as file:
-            json.dump(self.entries, file)
-
     def edit_entry(self, title, email, username, password):
-        
-        self.entries[title] = {title: [email, username, password]}
+
+        if title not in self.entries:
+            return 0
+
+        try:
+            self.entries[title] = {title: [email, username, password]}
+            with open(self.file, 'w') as file:
+                json.dump(self.entries, file)
+        except Exception as e:
+            print('Error editing entry {0} with Exception: {1}'.format(title, e))
 
     def delete_entry(self, title):
-            
-        self.entries.pop(title)
-        with open(self.file, 'w') as file:
-            json.dump(self.entries, file)
+
+        try:
+            self.entries.pop(title)
+            with open(self.file, 'w') as file:
+                json.dump(self.entries, file)
+        except Exception as e:
+            print('Delete failed with Exception: {0}'.format(e))
+
 
     def get_entry(self, title):
-        print(self.entries[title])
+        return self.entry[title]
 
     def get_all_entries(self):
-        print(self.entries)
+        print('returning {0}'.format(self.entries))
+
+        return self.entries
 
 
 
 
     '''TODO {
             -hash passwords. Encrypt Json file.
-            -This is crude as hell for a reason. But it must be cleaned up in the next iter.
-            -get_all_entries() must format the data and return it instead of printing
-            -learn about creating a tidier json file format on disk?
-            -create an argument for "get_all_entries()" that returns entries sorted by alphabetical title
-            -difflib functionality to help targetting when editing.
         }'''
