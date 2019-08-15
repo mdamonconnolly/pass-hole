@@ -2,7 +2,7 @@ import manager
 import add_entry_dialog
 from tkinter import *
 from tkinter import ttk
-
+import pyperclip
 
 root = Tk() #root window
 root.title("Passhole ui v.03")
@@ -79,9 +79,9 @@ class Window(Frame):
     def copy_pass(self):
         print("copy password\n")
 
-    def populate_table(self, table):
+    def populate_table(self):
         self.table.insert('','end',text='site.com', values=('site','email','username','password'))
-
+        self.table.insert('','end',text='Ebay', values=('SecondSite', 'caro@damon.com', 'carochicky', 'caropass'))
         print("table_populated")
 
 
