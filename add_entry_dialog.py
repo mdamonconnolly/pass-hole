@@ -3,7 +3,8 @@ from tkinter import *
 from tkinter import ttk
 
 class addDialog:
-    def __init__(self, parent):
+    def __init__(self, parent, manager):
+        self.manager = manager
         top = self.top = Toplevel(parent)
         top.resizable(False, False)
 
@@ -45,6 +46,13 @@ class addDialog:
         entered_email = str(self.email.get())
         entered_user = str(self.user.get())
         entered_password = str(self.password.get())
+
+        '''use manager to create entries'''
+        try:
+            self.manager.add_entry(entered_site, entered_email, entered_user, entered_password)
+        except Exception as e:
+            print('Adding to manager failed. Exception: {0}'.format(e))
+
         self.top.destroy()
         
         print(entered_site, entered_email, entered_user, entered_password)

@@ -6,7 +6,7 @@ class Manager():
 
     def __init__(self):
 
-        self.file = '.\\values.json'
+        self.file = 'values.kc'
         self.entries = {}
         
         if pathlib.Path(self.file).exists():

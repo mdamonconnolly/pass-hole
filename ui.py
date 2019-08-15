@@ -4,6 +4,8 @@ from tkinter import *
 from tkinter import ttk
 import pyperclip
 
+m = manager.Manager()
+
 root = Tk() #root window
 root.title("Passhole ui v.03")
 root.minsize(800,350)
@@ -18,7 +20,8 @@ bottomFrame = Frame(root).grid(row=2)
 class Window(Frame):
 
 
-    def __init__(self, master=None):
+    def __init__(self, master=None, manager=None):
+        self.manager = manager
         Frame.__init__(self, master)
 
         self.master = master #master widget
@@ -61,7 +64,7 @@ class Window(Frame):
         copy_pass_btn.grid(row=4, column=2, sticky=NSEW, pady=20, padx=20)
         
     def add_func(self):
-        add_dialog_popup = add_entry_dialog.addDialog(self.master)
+        add_dialog_popup = add_entry_dialog.addDialog(self.master, self.manager)
         print("added login\n")
 
     def edit_func(self):
@@ -86,5 +89,5 @@ class Window(Frame):
 
 
 
-app = Window(root) #instance class
+app = Window(root, m) #instance class
 root.mainloop() #init window
