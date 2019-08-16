@@ -4,18 +4,12 @@ from tkinter import *
 from tkinter import ttk
 import pyperclip
 
-m = manager.Manager()
-
-root = Tk() #root window
-root.title("Passhole ui v.03")
-root.minsize(800,350)
+#Constants
+version = '0.3'
 
 #Grid.rowconfigure(Grid, row=0, weight=1)
 #Grid.columnconfigure(Grid, row=0, weight=1)
 
-topFrame = Frame(root).grid(row=0)
-midFrame = Frame(root).grid(row=1)
-bottomFrame = Frame(root).grid(row=2)
 
 class Window(Frame):
 
@@ -83,11 +77,27 @@ class Window(Frame):
         print("copy password\n")
 
     def populate_table(self):
+        '''TODO: Get entries from manager and loop through them inserting them to table.'''
         self.table.insert('','end',text='site.com', values=('site','email','username','password'))
         self.table.insert('','end',text='Ebay', values=('SecondSite', 'caro@damon.com', 'carochicky', 'caropass'))
         print("table_populated")
 
 
+if __name__ == '__main__':
 
-app = Window(root, m) #instance class
-root.mainloop() #init window
+    m = manager.Manager()
+
+    root = Tk() #root window
+    root.title("Passhole ui v{0}".format(version))
+    root.minsize(850,400)
+
+    '''TODO: Are these needed now?'''
+    #Grid.rowconfigure(Grid, row=0, weight=1)
+    #Grid.columnconfigure(Grid, row=0, weight=1)
+
+    topFrame = Frame(root).grid(row=0)
+    midFrame = Frame(root).grid(row=1)
+    bottomFrame = Frame(root).grid(row=2)
+
+    app = Window(root, m) #instance class
+    root.mainloop() #init window

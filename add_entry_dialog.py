@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import ttk
 
 class addDialog:
-    def __init__(self, parent, manager):
+    def __init__(self, parent, manager, entry=None):
         self.manager = manager
         top = self.top = Toplevel(parent)
         top.resizable(False, False)
@@ -63,8 +63,7 @@ class addDialog:
 
 #TODO 
 # close popup dialog on button click
-# store fields 1-4 as strings
-# on popup closure, display added variables as a new row in the table
+# if entry is passed in to constructor, fields should be auto-filled with this. See issue #03
 
 
 
