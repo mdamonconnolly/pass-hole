@@ -2,23 +2,20 @@ import manager
 import add_entry_dialog
 from tkinter import *
 from tkinter import ttk
+import pyperclip
 
-
-root = Tk() #root window
-root.title("Passhole ui v.03")
-root.minsize(800,350)
+#Constants
+version = '0.3'
 
 #Grid.rowconfigure(Grid, row=0, weight=1)
 #Grid.columnconfigure(Grid, row=0, weight=1)
 
-topFrame = Frame(root).grid(row=0)
-midFrame = Frame(root).grid(row=1)
-bottomFrame = Frame(root).grid(row=2)
 
 class Window(Frame):
 
 
-    def __init__(self, master=None):
+    def __init__(self, master=None, manager=None):
+        self.manager = manager
         Frame.__init__(self, master)
 
         self.master = master #master widget
@@ -61,7 +58,7 @@ class Window(Frame):
         copy_pass_btn.grid(row=4, column=2, sticky=NSEW, pady=20, padx=20)
         
     def add_func(self):
-        add_dialog_popup = add_entry_dialog.addDialog(self.master)
+        add_dialog_popup = add_entry_dialog.addDialog(self.master, self.manager)
         print("added login\n")
 
     def edit_func(self):
@@ -79,12 +76,28 @@ class Window(Frame):
     def copy_pass(self):
         print("copy password\n")
 
-    def populate_table(self, table):
+    def populate_table(self):
+        '''TODO: Get entries from manager and loop through them inserting them to table.'''
         self.table.insert('','end',text='site.com', values=('site','email','username','password'))
-
+        self.table.insert('','end',text='Ebay', values=('SecondSite', 'caro@damon.com', 'carochicky', 'caropass'))
         print("table_populated")
 
 
+if __name__ == '__main__':
 
-app = Window(root) #instance class
-root.mainloop() #init window
+    m = manager.Manager()
+
+    root = Tk() #root window
+    root.title("Passhole ui v{0}".format(version))
+    root.minsize(850,400)
+
+    '''TODO: Are these needed now?'''
+    #Grid.rowconfigure(Grid, row=0, weight=1)
+    #Grid.columnconfigure(Grid, row=0, weight=1)
+
+    topFrame = Frame(root).grid(row=0)
+    midFrame = Frame(root).grid(row=1)
+    bottomFrame = Frame(root).grid(row=2)
+
+    app = Window(root, m) #instance class
+    root.mainloop() #init window
