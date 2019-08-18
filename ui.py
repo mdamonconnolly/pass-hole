@@ -26,7 +26,7 @@ class Window(Frame):
 
         # top row buttons 
 
-        add_btn = Button(topFrame, text="Add", command=self.add_func)
+        add_btn = Button(topFrame, text="Add", command=lambda : self.add_func)
         add_btn.grid(row=0, column=0, sticky=NSEW, pady=20, padx=20)
         edit_btn = Button(topFrame, text="Edit", command=self.edit_func)
         edit_btn.grid(row=0, column=1, sticky=NSEW, pady=20, padx=20)
@@ -58,14 +58,26 @@ class Window(Frame):
         copy_pass_btn.grid(row=4, column=2, sticky=NSEW, pady=20, padx=20)
         
     def add_func(self):
-        add_dialog_popup = add_entry_dialog.addDialog(self.master, self.manager)
-        print("added login\n")
+        self.dialog_popup = add_entry_dialog.addDialog(self.master, self.manager)
+        self.populate_table()
+
+    def populate_table(self):
+        self.table.delete(*self.table.get_children())
+        entry_dict = self.manager.get_all_entries()
+
+        for site, entry in entry_dict.items():
+            self.table.insert('','end',text="site.com", values=(site, entry[0],entry[1], entry[2] ))
 
     def edit_func(self):
         print("edited login\n")
 
     def del_func(self):
+        current_item = self.table.focus()
+        print(self.table.item(current_item))
+
+
         print("deleted login\n")
+        return 1
 
     def copy_email(self):
         print("copy email\n")
@@ -76,11 +88,6 @@ class Window(Frame):
     def copy_pass(self):
         print("copy password\n")
 
-    def populate_table(self):
-        '''TODO: Get entries from manager and loop through them inserting them to table.'''
-        self.table.insert('','end',text='site.com', values=('site','email','username','password'))
-        self.table.insert('','end',text='Ebay', values=('SecondSite', 'caro@damon.com', 'carochicky', 'caropass'))
-        print("table_populated")
 
 
 if __name__ == '__main__':

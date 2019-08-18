@@ -62,7 +62,6 @@ class addDialog:
         self.top.destroy()
 
 #TODO 
-# close popup dialog on button click
 # if entry is passed in to constructor, fields should be auto-filled with this. See issue #03
 
 
