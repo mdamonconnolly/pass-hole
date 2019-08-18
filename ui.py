@@ -25,7 +25,6 @@ class Window(Frame):
     def initUI(self):
 
         # top row buttons 
-
         add_btn = Button(topFrame, text="Add", command=self.add_func)
         add_btn.grid(row=0, column=0, sticky=NSEW, pady=20, padx=20)
         edit_btn = Button(topFrame, text="Edit", command=self.edit_func)
@@ -58,29 +57,40 @@ class Window(Frame):
         copy_pass_btn.grid(row=4, column=2, sticky=NSEW, pady=20, padx=20)
         
     def add_func(self):
-        add_dialog_popup = add_entry_dialog.addDialog(self.master, self.manager)
-        print("added login\n")
+        self.dialog_popup = add_entry_dialog.addDialog(self.master, self.manager, main=self)
+        
+    def populate_table(self):
+        self.table.delete(*self.table.get_children())
+        entry_dict = self.manager.get_all_entries()
+        for site, entry in entry_dict.items():
+            self.table.insert('','end',text="site.com", values=(site, entry[0],entry[1], entry[2] ))
 
     def edit_func(self):
-        print("edited login\n")
+        self.dialog_popup = add_entry_dialog.addDialog(self.master, self.manager, main=self)
+        print("edited")
 
     def del_func(self):
-        print("deleted login\n")
+        current_item = self.table.focus()
+        try:
+            self.manager.delete_entry((self.table.item(current_item)["values"][0]))
+            self.populate_table()
+
+        except Exception as e:
+            print("Error deleting item. Exception : {0}".format(e))
+            return 0
+        return 1
 
     def copy_email(self):
-        print("copy email\n")
+        current_item = self.table.focus()
+        pyperclip.copy(self.table.item(current_item)["values"][1])
 
     def copy_user(self):
-        print("copy username\n")
+        current_item = self.table.focus()
+        pyperclip.copy(self.table.item(current_item)["values"][2])
 
     def copy_pass(self):
-        print("copy password\n")
-
-    def populate_table(self):
-        '''TODO: Get entries from manager and loop through them inserting them to table.'''
-        self.table.insert('','end',text='site.com', values=('site','email','username','password'))
-        self.table.insert('','end',text='Ebay', values=('SecondSite', 'caro@damon.com', 'carochicky', 'caropass'))
-        print("table_populated")
+        current_item = self.table.focus()
+        pyperclip.copy(self.table.item(current_item)["values"][3])
 
 
 if __name__ == '__main__':
