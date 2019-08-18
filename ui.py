@@ -26,7 +26,7 @@ class Window(Frame):
 
         # top row buttons 
 
-        add_btn = Button(topFrame, text="Add", command=lambda : self.add_func)
+        add_btn = Button(topFrame, text="Add", command=self.add_func)
         add_btn.grid(row=0, column=0, sticky=NSEW, pady=20, padx=20)
         edit_btn = Button(topFrame, text="Edit", command=self.edit_func)
         edit_btn.grid(row=0, column=1, sticky=NSEW, pady=20, padx=20)
@@ -58,9 +58,8 @@ class Window(Frame):
         copy_pass_btn.grid(row=4, column=2, sticky=NSEW, pady=20, padx=20)
         
     def add_func(self):
-        self.dialog_popup = add_entry_dialog.addDialog(self.master, self.manager)
-        self.populate_table()
-
+        self.dialog_popup = add_entry_dialog.addDialog(self.master, self.manager, main=self)
+        
     def populate_table(self):
         self.table.delete(*self.table.get_children())
         entry_dict = self.manager.get_all_entries()
@@ -73,10 +72,14 @@ class Window(Frame):
 
     def del_func(self):
         current_item = self.table.focus()
-        print(self.table.item(current_item))
+        try:
+            self.manager.delete_entry((self.table.item(current_item)["values"][0]))
+            self.populate_table()
 
+        except Exception as e:
+            print("Error deleting item. Exception : {0}".format(e))
+            return 0
 
-        print("deleted login\n")
         return 1
 
     def copy_email(self):

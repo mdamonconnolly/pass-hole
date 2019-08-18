@@ -3,10 +3,11 @@ from tkinter import *
 from tkinter import ttk
 
 class addDialog:
-    def __init__(self, parent, manager, entry=None):
+    def __init__(self, parent, manager, main, entry=None):
         self.manager = manager
         top = self.top = Toplevel(parent)
         top.resizable(False, False)
+        self.parent = main
 
         vertical_frame = Frame(top)
         vertical_frame.pack(side=TOP)
@@ -54,6 +55,8 @@ class addDialog:
             print('Adding to manager failed. Exception: {0}'.format(e))
 
         self.top.destroy()
+        self.parent.populate_table()
+        
         
         print(entered_site, entered_email, entered_user, entered_password)
 
