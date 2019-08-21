@@ -56,18 +56,35 @@ class Window(Frame):
         copy_pass_btn = Button(bottomFrame, text="Copy Pass", command=self.copy_pass)
         copy_pass_btn.grid(row=4, column=2, sticky=NSEW, pady=20, padx=20)
         
+        
     def add_func(self):
+        self.current_row = self.table.focus()
+        print(self.table.item(self.current_row))
+
         self.dialog_popup = add_entry_dialog.addDialog(self.master, self.manager, main=self)
+        
+            
+    def edit_func(self):
+        self.current_row = self.table.focus()
+        if  self.table.item(self.current_row)['values'] == '':
+            print("Nothing selected..")
+        else:
+            entries = [self.table.item(self.current_row)['values'][0], 
+                    self.table.item(self.current_row)['values'][1],
+                    self.table.item(self.current_row)['values'][2],
+                    self.table.item(self.current_row)['values'][3]]
+            self.dialog_popup = add_entry_dialog.addDialog(self.master, self.manager, main=self, entry=entries)
+            print('Edited')
         
     def populate_table(self):
         self.table.delete(*self.table.get_children())
         entry_dict = self.manager.get_all_entries()
+
+        print(entry_dict.items)
+        
         for site, entry in entry_dict.items():
             self.table.insert('','end',text="site.com", values=(site, entry[0],entry[1], entry[2] ))
 
-    def edit_func(self):
-        self.dialog_popup = add_entry_dialog.addDialog(self.master, self.manager, main=self)
-        print("edited")
 
     def del_func(self):
         current_item = self.table.focus()
@@ -83,14 +100,17 @@ class Window(Frame):
     def copy_email(self):
         current_item = self.table.focus()
         pyperclip.copy(self.table.item(current_item)["values"][1])
+        print('Copied email of selected row')
 
     def copy_user(self):
         current_item = self.table.focus()
         pyperclip.copy(self.table.item(current_item)["values"][2])
+        print('Copied username of selected row')
 
     def copy_pass(self):
         current_item = self.table.focus()
         pyperclip.copy(self.table.item(current_item)["values"][3])
+        print('Copied password of selected row')
 
 
 if __name__ == '__main__':
