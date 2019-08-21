@@ -4,10 +4,12 @@ from tkinter import ttk
 
 class addDialog:
     def __init__(self, parent, manager, main, entry=None):
+
         self.manager = manager
         top = self.top = Toplevel(parent)
         top.resizable(False, False)
         self.parent = main
+        self.entry = entry
 
         vertical_frame = Frame(top)
         vertical_frame.pack(side=TOP)
@@ -39,29 +41,50 @@ class addDialog:
         self.password.pack(pady=10, padx=10)
 
         #buttons
-        self.enterDetails_btn = Button(button_frame, text="Add new entry", width=15, command=self.addEntry).pack(side=LEFT, pady=10, padx=20)    
-        self.cancel_btn = Button(button_frame, text="Cancel", width=15, command=self.exit).pack(side=RIGHT, pady=10, padx=20)
+        if self.entry != None:
+            self.enterDetails_btn = Button(button_frame, text="Edit Entry", width=15, command=self.editEntry).pack(side=LEFT, pady=10, padx=20)
+        else:
+            self.enterDetails_btn = Button(button_frame, text="Add new entry", width=15, command=self.addEntry).pack(side=LEFT, pady=10, padx=20)
+
+        self.cancel_btn = Button(button_frame, text="Cancel", width=15, command=self.exit_dialog).pack(side=RIGHT, pady=10, padx=20)
+
+        # prefill fields for edit dialog
+
+        if self.entry != None:
+            self.site.insert(0, str(entry[0]))
+            self.email.insert(0, str(entry[1]))
+            self.user.insert(0, str(entry[2]))
+            self.password.insert(0, str(entry[3]))
+   
+
 
     def addEntry(self):
-        entered_site = str(self.site.get())
-        entered_email = str(self.email.get())
-        entered_user = str(self.user.get())
-        entered_password = str(self.password.get())
+        self.entered_site = str(self.site.get())
+        self.entered_email = str(self.email.get())
+        self.entered_user = str(self.user.get())
+        self.entered_password = str(self.password.get())
 
         '''use manager to create entries'''
         try:
-            self.manager.add_entry(entered_site, entered_email, entered_user, entered_password)
+            self.manager.add_entry(self.entered_site, self.entered_email, self.entered_user, self.entered_password)
         except Exception as e:
             print('Adding to manager failed. Exception: {0}'.format(e))
 
         self.top.destroy()
         self.parent.populate_table()
-        
-        
-        print(entered_site, entered_email, entered_user, entered_password)
+    
+    def editEntry(self):
+        try:
+            self.manager.edit_entry(self.entry[0], self.entry[1], self.entry[2], self.entry[3])
+            
+            print('successfully edited existing entry')
 
+        except Exception as e:
+            print('Editing entry failed ; Exception: {0}'.format(e))
+
+        self.top.destroy()
         
-    def exit(self):
+    def exit_dialog(self):
         self.top.destroy()
 
 #TODO 
