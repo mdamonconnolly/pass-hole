@@ -29,7 +29,7 @@ class Manager():
             return 0
 
         try:
-            self.entries[title] = {title: [email, username, password]}
+            self.entries[title] = [email, username, password]
             with open(self.file, 'w') as file:
                 json.dump(self.entries, file)
         except Exception as e:
