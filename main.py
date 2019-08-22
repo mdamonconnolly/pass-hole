@@ -3,10 +3,9 @@ import add_entry_dialog
 from tkinter import *
 from tkinter import ttk
 import pyperclip
-import main
 
 #Constants
-version = '0.3'
+VERSION = '0.8'
 
 
 class Window(Frame):
@@ -115,7 +114,7 @@ if __name__ == '__main__':
     m = manager.Manager()
 
     root = Tk() #root window
-    root.title("Passhole ui v{0}".format(version))
+    root.title("Passhole ui v{0}".format(VERSION))
     root.minsize(850,400)
 
     topFrame = Frame(root).grid(row=0)
