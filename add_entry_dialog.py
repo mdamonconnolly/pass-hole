@@ -74,8 +74,12 @@ class addDialog:
         self.parent.populate_table()
     
     def editEntry(self):
+        self.entered_site = str(self.site.get())
+        self.entered_email = str(self.email.get())
+        self.entered_user = str(self.user.get())
+        self.entered_password = str(self.password.get())
         try:
-            self.manager.edit_entry(self.entry[0], self.entry[1], self.entry[2], self.entry[3])
+            self.manager.edit_entry(self.entered_site, self.entered_email, self.entered_user, self.entered_password)
             
             print('successfully edited existing entry')
 
@@ -83,6 +87,7 @@ class addDialog:
             print('Editing entry failed ; Exception: {0}'.format(e))
 
         self.top.destroy()
+        self.parent.populate_table()
         
     def exit_dialog(self):
         self.top.destroy()
