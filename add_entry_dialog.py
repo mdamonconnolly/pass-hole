@@ -49,46 +49,36 @@ class addDialog:
         self.cancel_btn = Button(button_frame, text="Cancel", width=15, command=self.exit_dialog).pack(side=RIGHT, pady=10, padx=20)
 
         # prefill fields for edit dialog
-
         if self.entry != None:
             self.site.insert(0, str(entry[0]))
             self.email.insert(0, str(entry[1]))
             self.user.insert(0, str(entry[2]))
             self.password.insert(0, str(entry[3]))
    
-
-
     def addEntry(self):
-        self.entered_site = str(self.site.get())
-        self.entered_email = str(self.email.get())
-        self.entered_user = str(self.user.get())
-        self.entered_password = str(self.password.get())
-
-        '''use manager to create entries'''
+        fields = self.getData()
         try:
-            self.manager.add_entry(self.entered_site, self.entered_email, self.entered_user, self.entered_password)
+            self.manager.add_entry(fields[0], fields[1], fields[2], fields[3])
         except Exception as e:
             print('Adding to manager failed. Exception: {0}'.format(e))
-
         self.top.destroy()
         self.parent.populate_table()
     
     def editEntry(self):
-        self.entered_site = str(self.site.get())
-        self.entered_email = str(self.email.get())
-        self.entered_user = str(self.user.get())
-        self.entered_password = str(self.password.get())
-        try:
-            self.manager.edit_entry(self.entered_site, self.entered_email, self.entered_user, self.entered_password)
-            
-            print('successfully edited existing entry')
 
+        fields = self.getData()
+
+        try:
+            self.manager.edit_entry(fields[0], fields[1], fields[2], fields[3])          
+            print('successfully edited existing entry')
         except Exception as e:
             print('Editing entry failed ; Exception: {0}'.format(e))
-
         self.top.destroy()
         self.parent.populate_table()
-        
+
+    def getData(self):
+        return [str(self.site.get()), str(self.email.get()), str(self.user.get()), str(self.password.get())]
+   
     def exit_dialog(self):
         self.top.destroy()
 

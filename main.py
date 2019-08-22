@@ -3,12 +3,10 @@ import add_entry_dialog
 from tkinter import *
 from tkinter import ttk
 import pyperclip
+import main
 
 #Constants
 version = '0.3'
-
-#Grid.rowconfigure(Grid, row=0, weight=1)
-#Grid.columnconfigure(Grid, row=0, weight=1)
 
 
 class Window(Frame):
@@ -85,7 +83,6 @@ class Window(Frame):
         for site, entry in entry_dict.items():
             self.table.insert('','end',text="site.com", values=(site, entry[0],entry[1], entry[2] ))
 
-
     def del_func(self):
         current_item = self.table.focus()
         try:
@@ -120,10 +117,6 @@ if __name__ == '__main__':
     root = Tk() #root window
     root.title("Passhole ui v{0}".format(version))
     root.minsize(850,400)
-
-    '''TODO: Are these needed now?'''
-    #Grid.rowconfigure(Grid, row=0, weight=1)
-    #Grid.columnconfigure(Grid, row=0, weight=1)
 
     topFrame = Frame(root).grid(row=0)
     midFrame = Frame(root).grid(row=1)
