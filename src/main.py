@@ -3,9 +3,10 @@ import add_entry_dialog
 from tkinter import *
 from tkinter import ttk
 import pyperclip
+import lock
 
 #Constants
-VERSION = '0.8'
+VERSION = '0.9'
 
 
 class Window(Frame):
@@ -109,6 +110,11 @@ class Window(Frame):
         print('Copied password of selected row')
 
 
+    def safeClose(self):
+        self.manager.close()
+        self.master.destroy()
+
+
 if __name__ == '__main__':
 
     m = manager.Manager()
@@ -116,6 +122,7 @@ if __name__ == '__main__':
     root = Tk() #root window
     root.title("Passhole ui v{0}".format(VERSION))
     root.minsize(850,400)
+    #root.protocol('WM_DELETE_WINDOW', Window.safeClose)
 
     topFrame = Frame(root).grid(row=0)
     midFrame = Frame(root).grid(row=1)
@@ -123,3 +130,4 @@ if __name__ == '__main__':
 
     app = Window(root, m) #instance class
     root.mainloop() #init window
+    m.close()

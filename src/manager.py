@@ -1,5 +1,6 @@
 import json
 import pathlib
+import lock
 
 class Manager():
 
@@ -8,6 +9,10 @@ class Manager():
 
         self.file = 'values.kc'
         self.entries = {}
+
+        if pathlib.Path(self.file + ".encrypted").exists():
+            lock.decrypt(b'sudokudosudokudo', self.file + ".encrypted")
+            pathlib.Path(self.file + ".encrypted").unlink()
         
         if pathlib.Path(self.file).exists():
             with open(self.file, 'r') as file:
@@ -50,8 +55,12 @@ class Manager():
         return self.entries[title]
 
     def get_all_entries(self):
-        print('returning {0}'.format(self.entries))
         return self.entries
+
+    def close(self):
+        if pathlib.Path(self.file).exists():
+            lock.encrypt(b'sudokudosudokudo',self.file)
+            pathlib.Path(self.file).unlink()
 
 
 
