@@ -6,7 +6,7 @@ import pyperclip
 import lock
 
 #Constants
-VERSION = '0.9'
+VERSION = '1.0'
 
 
 class Window(Frame):
